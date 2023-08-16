@@ -5,9 +5,15 @@ class PageTwo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final arg = ModalRoute.of(context)!.settings.arguments;
     return Scaffold(
-      appBar: AppBar(title: const Text("Page Two")),
-      body: const Text("This is a sample page"),
+      appBar: AppBar(title:  Text("Page: $arg")),
+      body: Column(children: [
+        TextButton(onPressed: (){
+          Navigator.of(context).pop("pass custom message to main");
+        }, child: const Text("custom message")),
+const Text("This is a sample page"),
+      ],) 
     );
   }
 }

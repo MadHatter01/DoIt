@@ -1,0 +1,41 @@
+[
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const PageOne(title: "My custom string")),
+                  );
+                },
+                child: const Text("Page 1")),
+            TextButton(onPressed: () async {
+final resp = await Navigator.pushNamed(context, "/second", arguments: "new title" );
+print(resp);
+            }, child: const Text("Page 2")),
+            const SizedBox(height: 10),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Custom Settings",
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Audio On: "),
+                TextButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("This is a timed message")));
+                    },
+                    child: const Text("Message"))
+//                  Switch(value: value, onChanged: (nv)=>{
+// setState((){
+//   value = nv;
+// })
+//                  }),
+              ],
+            ),
+            ElevatedButton(onPressed: () => {}, child: const Text("Click Me"))
+          ],
