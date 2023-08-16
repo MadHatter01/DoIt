@@ -1,3 +1,5 @@
+import 'package:doit/pages/page1.dart';
+import 'package:doit/pages/page2.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,7 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -32,7 +33,6 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
-        
       ),
       home: const MyHomePage(title: 'Do It!'),
     );
@@ -89,40 +89,54 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: const Text("Preferences"),
       ),
-      body:  Center(
-        child:  Column(
+      body: Center(
+        child: Column(
           children: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const PageOne()),
+                  );
+                },
+                child: const Text("Page 1")),
+            TextButton(onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const PageTwo()),);
+            }, child: const Text("Page 2")),
             Image.network('https://picsum.photos/250?image=9'),
-            const SizedBox(height:10),
+            const SizedBox(height: 10),
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: TextField(
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Custom Settings",
-                  
                 ),
               ),
             ),
-             Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-               const Text("Audio On: "),
-                 Switch(value: value, onChanged: (nv)=>{
-setState((){
-  value = nv;
-})
-                 }),
-               ],
-             ), 
-             ElevatedButton(onPressed: ()=>{}, child: const Text("Click Me"))
+              children: [
+                const Text("Audio On: "),
+                TextButton(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("This is a timed message")));
+                    },
+                    child: const Text("Message"))
+//                  Switch(value: value, onChanged: (nv)=>{
+// setState((){
+//   value = nv;
+// })
+//                  }),
+              ],
+            ),
+            ElevatedButton(onPressed: () => {}, child: const Text("Click Me"))
           ],
         ),
-        
-        ),
-      
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      ),
+
+      // Center is a layout widget. It takes a single child and positions it
+      // in the middle of the parent.
       //   child: Column(
       //     // Column is also a layout widget. It takes a list of children and
       //     // arranges them vertically. By default, it sizes itself to fit its
@@ -148,9 +162,9 @@ setState((){
       //         border: Border.all(width:3),
       //         borderRadius:BorderRadius.circular(10),
       //         color: Colors.greenAccent,
-              
+
       //   ),
-        
+
       //         child: PageView(  children: const [
       //           Text("Custom Item 1",
       //           style: TextStyle(color: Colors.black, fontSize: 16),),
@@ -159,7 +173,7 @@ setState((){
       //         ],
       //      ),
       //       ),
- 
+
       //       const Text(
       //         'You have pushed the button this many times:',
       //       ),
