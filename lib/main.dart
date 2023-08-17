@@ -16,17 +16,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       routes: {
-        '/':(context) => const MyHomePage(title: 'Do It!'),
-        '/first':(context) => const PageOne(),
-        '/second':(context) => const PageTwo()
-,
+        '/': (context) => const MyHomePage(title: 'Do It!'),
+        '/first': (context) => const PageOne(),
+        '/second': (context) => const PageTwo(),
       },
       theme: ThemeData(
- 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
       ),
-    
     );
   }
 }
@@ -41,31 +38,67 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-final TextEditingController _emailcontroller = TextEditingController();
-final TextEditingController _pswdcontroller = TextEditingController();
+  final GlobalKey<FormState> _signKey = GlobalKey();
+  final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _pswdcontroller = TextEditingController();
+  final RegExp emailValidator = RegExp(
+    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text("Preferences"),
       ),
       body: Center(
+       
         child: Form(
+      key: _signKey,
+
           child: Column(
             children: [
               TextFormField(
-        controller: _emailcontroller,
-        keyboardType: TextInputType.emailAddress,
-        decoration: const InputDecoration(hintText: "Enter an Email"),
+                controller: _emailcontroller,
+                keyboardType: TextInputType.emailAddress,
+                decoration: const InputDecoration(hintText: "Enter an Email"),
+              validator: (value) {
+                if(value==null || value.isEmpty){
+                  return "Please enter an email";
+                }
+                else if(!emailValidator.hasMatch(value)){
+return "Please enter a valid email";
+                }
+
+                return null;
+              },
               ),
-              TextFormField(controller: _pswdcontroller, obscureText: true, decoration:const InputDecoration(hintText: "Enter an Password"),),
-              ElevatedButton(onPressed: (){
-                debugPrint("Email: ${_emailcontroller.text}");
-                debugPrint("Password: ${_pswdcontroller.text}");
-              }, child: const Text('Submit'))
+              TextFormField(
+                controller: _pswdcontroller,
+                obscureText: true,
+                decoration:
+                    const InputDecoration(hintText: "Enter an Password"),
+                    validator: (value){
+                      if (value==null || value.isEmpty){
+                        return "Please enter a Password";
+                      }
+                      else if(value.length <=8){
+                        return "Password must be atleast 8 characters";
+                      }
+                      return null;
+                    },
+              ),
+              ElevatedButton(
+                  onPressed: () {
+                     if (_signKey.currentState == null) {
+    debugPrint("_formKey.currentState is null!");
+                     }
+                    if (_signKey.currentState!.validate()) {
+                      debugPrint("Email: ${_emailcontroller.text}");
+                      debugPrint("Password: ${_pswdcontroller.text}");
+                    }
+                  },
+                  child: const Text('Submit'))
             ],
           ),
         ),
@@ -120,7 +153,7 @@ final TextEditingController _pswdcontroller = TextEditingController();
       //   ),
       // ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: () {},
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
