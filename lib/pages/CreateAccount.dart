@@ -30,6 +30,8 @@ class _CreateAccountState extends State<CreateAccount> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+            const Image(image: AssetImage('assets/light-bulb.png'), width:80),
+              const SizedBox(height:24),
               const Text(
                 "Welcome to Thoughts!",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),

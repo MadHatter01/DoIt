@@ -23,8 +23,12 @@ class MyApp extends StatelessWidget {
         
       },
       theme: ThemeData(
+        // brightness: Brightness.dark,
+        appBarTheme: const AppBarTheme(centerTitle: true, toolbarHeight: 100),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
         useMaterial3: true,
+        fontFamily: 'Roboto',
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(backgroundColor: Colors.blueAccent)
       ),
     );
   }
@@ -59,6 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const Image(image: AssetImage('assets/light-bulb.png'), width:80),
+              const SizedBox(height:24),
               const Text(
                 "Login in to Thoughts!",
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -183,11 +189,7 @@ class _MyHomePageState extends State<MyHomePage> {
       //     ],
       //   ),
       // ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+
     );
   }
 }
